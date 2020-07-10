@@ -46,9 +46,20 @@ function traverse(root: string) {
       if (stats.isDirectory()) {
         walk(joinedP);
       } else if (path.extname(p) === ".vue") {
+        var newPath = `file://${joinedP}`.replace(/\\/g, "/");
+        if (process.platform == "win32") {
+          if (joinedP.length > 1 && joinedP[1] == ':') {
+            newPath = `file:///${joinedP}`.replace(/\\/g, "/");
+          } else {
+            newPath = `file:///${process.cwd()}/${joinedP}`.replace(/\\/g, "/");
+          }
+        }
+
+        console.log(newPath)
+
         docs.push(
           TextDocument.create(
-            `file://${joinedP}`,
+            newPath,
             "vue",
             0,
             fs.readFileSync(joinedP, "utf8")
