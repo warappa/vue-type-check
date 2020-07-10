@@ -3,10 +3,15 @@ import * as path from "path";
 import minimist from "minimist";
 import { check } from "./index";
 
-const { workspace, srcDir, onlyTemplate } = minimist(process.argv.slice(2));
+let { workspace, srcDir, onlyTemplate } = minimist(process.argv.slice(2));
 
 if (!workspace) {
-  throw new Error("--workspace is required");
+  //throw new Error("--workspace is required");
+  workspace = "";
+}
+
+if (!srcDir){
+  srcDir = "src";
 }
 
 const cwd = process.cwd();
